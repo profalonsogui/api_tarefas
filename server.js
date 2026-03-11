@@ -57,26 +57,6 @@ app.get("/tarefas", (req, res) => {
   return res.json(filtradas);
 });
 
-/**
- * GET /tarefas/:id
- * Busca uma tarefa específica por ID
- * Ex: GET http://localhost:3000/tarefas/1
- */
-app.get("/tarefas/:id", (req, res) => {
-  // Pega o id da URL e converte para número
-  const id = Number(req.params.id);
-
-  // Procura a tarefa no array
-  const tarefa = tarefas.find((t) => t.id === id);
-
-  // Se não encontrar, retorna erro 404
-  if (!tarefa) {
-    return res.status(404).json({ erro: "Tarefa não encontrada." });
-  }
-
-  // Se encontrar, retorna a tarefa
-  return res.json(tarefa);
-});
 
 /**
  * POST /tarefas
@@ -109,73 +89,6 @@ app.post("/tarefas", (req, res) => {
   return res.status(201).json(novaTarefa);
 });
 
-/**
- * PUT /tarefas/:id
- * Atualiza a tarefa inteira (titulo e concluida)
- * Ex: PUT http://localhost:3000/tarefas/1
- * Body JSON: { "titulo": "Novo título", "concluida": true }
- */
-app.put("/tarefas/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  // Pega dados do body
-  const { titulo, concluida } = req.body;
-
-  // Encontra o índice da tarefa no array
-  const indice = tarefas.findIndex((t) => t.id === id);
-
-  // Se não existir, 404
-  if (indice === -1) {
-    return res.status(404).json({ erro: "Tarefa não encontrada." });
-  }
-
-  // Valida título
-  if (!titulo || typeof titulo !== "string" || titulo.trim().length < 3) {
-    return res.status(400).json({
-      erro: "Campo 'titulo' é obrigatório e deve ter pelo menos 3 caracteres.",
-    });
-  }
-
-  // Valida concluida (precisa ser boolean)
-  if (typeof concluida !== "boolean") {
-    return res.status(400).json({
-      erro: "Campo 'concluida' deve ser boolean (true/false).",
-    });
-  }
-
-  // Atualiza o objeto no array (substitui inteiro)
-  tarefas[indice] = {
-    id,
-    titulo: titulo.trim(),
-    concluida,
-  };
-
-  // Retorna a tarefa atualizada
-  return res.json(tarefas[indice]);
-});
-
-/**
- * DELETE /tarefas/:id
- * Remove uma tarefa
- * Ex: DELETE http://localhost:3000/tarefas/1
- */
-app.delete("/tarefas/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  // Procura a tarefa
-  const indice = tarefas.findIndex((t) => t.id === id);
-
-  // Se não achar, 404
-  if (indice === -1) {
-    return res.status(404).json({ erro: "Tarefa não encontrada." });
-  }
-
-  // Remove 1 item do array e guarda o removido
-  const removida = tarefas.splice(indice, 1)[0];
-
-  // Retorna mensagem + tarefa removida
-  return res.json({ mensagem: "Tarefa removida ✅", tarefa: removida });
-});
 
 // Define a porta (padrão 3000)
 const PORT = process.env.PORT || 3000;
