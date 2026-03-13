@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API de Tarefas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gestão de Tarefas</h1>
+
+    <form id="formTarefa">
+      <input type="text" id="titulo" placeholder="Título da tarefa" required>
+      <textarea id="descricao" placeholder="Descrição da tarefa" required></textarea>
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <h2>Lista de Tarefas</h2>
+    <div id="listaTarefas"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
