@@ -12,7 +12,6 @@ app.use(express.json());
 /**
  * "Banco" em memória (array)
  * - Some quando o servidor reinicia
- * - Ótimo para iniciar com turma fraca
  */
 let tarefas = [
   { id: 1, titulo: "Estudar Node.js", concluida: false },
