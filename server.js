@@ -90,7 +90,7 @@ app.post("/tarefas", (req, res) => {
 
 
 // Define a porta (padrão 3000)
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Inicia o servidor
 app.listen(PORT, () => {
