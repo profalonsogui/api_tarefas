@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // Chave secreta para assinar o Token (No TCC, diga que isso deve ficar em um arquivo .env)
-const JWT_SECRET = "sua_chave_secreta_aqui";
+const JWT_SECRET = "b37e8aa7d61455024cc4ac9775552e40059a631a566f4a0064bac7b53305fcc0";
 
 // 1. ROTA DE CADASTRO (POST /auth/register)
 router.post("/register", async (req, res) => {
