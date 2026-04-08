@@ -13,13 +13,18 @@ formLogin.addEventListener("submit", async (e) => {
 
     const dados = await res.json();
 
+    // Dentro do seu fetch de login, quando a resposta for OK:
     if (res.ok) {
-        // IMPORTANTE: Salva o Token e o objeto Usuário (com ID)
+        //const dados = await res.json();
+        
+        // 1. Salva o Token (para segurança)
         localStorage.setItem("token", dados.token);
+        
+        // 2. Salva os dados do usuário (para o "Bem-vindo")
         localStorage.setItem("usuario", JSON.stringify(dados.usuario));
         
         window.location.href = "index.html";
-    } else {
+    }else {
         alert(dados.mensagem);
     }
 });
