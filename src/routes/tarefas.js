@@ -50,6 +50,10 @@ router.put("/:id", (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
+    if (!status) {
+        return res.status(400).json({ mensagem: "Campo 'status' é obrigatório." });
+    }
+
     const sql = "UPDATE tarefas SET status = ? WHERE id = ?";
     
     db.query(sql, [status, id], (err, result) => {

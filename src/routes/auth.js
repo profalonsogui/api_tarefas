@@ -7,6 +7,15 @@ const jwt = require("jsonwebtoken");
 // Chave secreta para assinar o Token (No TCC, diga que isso deve ficar em um arquivo .env)
 const JWT_SECRET = "b37e8aa7d61455024cc4ac9775552e40059a631a566f4a0064bac7b53305fcc0";
 
+function query(sql, params) {
+    return new Promise((resolve, reject) => {
+        db.query(sql, params, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+}
+
 // 1. ROTA DE CADASTRO (POST /auth/register)
 router.post("/register", async (req, res) => {
     const { nome, email, senha } = req.body;
@@ -18,25 +27,23 @@ router.post("/register", async (req, res) => {
 
     try {
         // Verificar se o e-mail já existe
-        db.query("SELECT * FROM users WHERE email = ?", [email], async (err, result) => {
-            if (err) return res.status(500).json(err);
-            if (result.length > 0) {
-                return res.status(400).json({ mensagem: "Este e-mail já está em uso." });
-            }
+        const existentes = await query("SELECT id FROM users WHERE email = ?", [email]);
+        if (existentes.length > 0) {
+            return res.status(400).json({ mensagem: "Este e-mail já está em uso." });
+        }
 
-            // Criptografar a senha
-            const salt = await bcrypt.genSalt(10);
-            const senhaHash = await bcrypt.hash(senha, salt);
+        // Criptografar a senha
+        const salt = await bcrypt.genSalt(10);
+        const senhaHash = await bcrypt.hash(senha, salt);
 
-            // Inserir no banco
-            const sql = "INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)";
-            db.query(sql, [nome, email, senhaHash], (err, result) => {
-                if (err) return res.status(500).json(err);
-                res.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" });
-            });
-        });
+        // Inserir no banco
+        const sql = "INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)";
+        await query(sql, [nome, email, senhaHash]);
+
+        return res.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" });
     } catch (error) {
-        res.status(500).json({ mensagem: "Erro interno no servidor." });
+        console.error("Erro no cadastro:", error);
+        return res.status(500).json({ mensagem: "Erro interno no servidor." });
     }
 });
 
