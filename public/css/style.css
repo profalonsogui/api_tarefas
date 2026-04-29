@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Um leve sombreado para destacar */
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, textarea, button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px; /* Arredondamento suave para todos */
+}
+
+input, textarea {
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: darkslateblue;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #3f368a; /* Escurece um pouco ao passar o mouse */
+}
+
+.tarefa {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    background: #f9f9f9; /* Mudei para um cinza bem claro para não brigar com o texto */
+}
+
+/* =========================================
+   ESTILOS PARA LOGIN E CADASTRO 
+   ========================================= */
+
+.auth-footer {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.auth-footer a {
+    color: darkslateblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.input-group label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
