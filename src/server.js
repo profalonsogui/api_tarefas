@@ -39,6 +39,50 @@ app.post("/tarefas", (req, res) => {
 });
 
 
+// PUT /tarefas/:id - atualizar tarefa
+app.put("/tarefas/:id", (req, res) => {
+    const { id } = req.params;
+    const { titulo, descricao, status } = req.body;
+
+    const sql = `
+        UPDATE tarefas 
+        SET titulo = ?, descricao = ?, status = ?
+        WHERE id = ?
+    `;
+
+    db.query(sql, [titulo, descricao, status, id], (err, result) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        // verifica se encontrou a tarefa
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ mensagem: "Tarefa não encontrada" });
+        }
+
+        return res.json({ mensagem: "Tarefa atualizada com sucesso!" });
+    });
+});
+
+// PATCH /tarefas/:id/status
+app.patch("/tarefas/:id/status", (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const sql = "UPDATE tarefas SET status = ? WHERE id = ?";
+
+    db.query(sql, [status, id], (err, result) => {
+        if (err) return res.status(500).json(err);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ mensagem: "Tarefa não encontrada" });
+        }
+
+        return res.json({ mensagem: "Status atualizado!" });
+    });
+});
+
+
 
 app.listen(3000, () => {
     console.log("Servidor rodando em http://localhost:3000");
