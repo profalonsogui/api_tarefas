@@ -8,7 +8,13 @@
 </head>
 <body>
   <div class="container">
-    <h1>Gestão de Tarefas</h1>
+    <div class="header-topo">
+        <div>
+            <h1>Gestão de Tarefas</h1>
+            <p id="mensagemBoasVindas" style="margin: 5px 0 15px 0; color: #555;"></p>
+        </div>
+        <button class="btn-sair" onclick="logout()">Sair</button>
+    </div>
 
     <form id="formTarefa">
       <input type="text" id="titulo" placeholder="Título da tarefa" required>

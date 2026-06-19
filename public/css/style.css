@@ -87,3 +87,63 @@ button:hover {
     font-weight: bold;
     color: #333;
 }
+
+/* =========================================
+   BOTOES DE ACAO E STATUS (NOVOS)
+   ========================================= */
+
+.header-topo {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.btn-sair {
+    background-color: #dc3545;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.btn-sair:hover {
+    background-color: #c82333;
+}
+
+.acoes-tarefa {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn-concluir {
+    background-color: #28a745;
+}
+
+.btn-concluir:hover {
+    background-color: #218838;
+}
+
+.btn-editar {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.btn-editar:hover {
+    background-color: #e0a800;
+}
+
+.btn-deletar {
+    background-color: #dc3545;
+}
+
+.btn-deletar:hover {
+    background-color: #c82333;
+}
+
+/* Classes dinâmicas para o status via JS */
+.tarefa-concluida {
+    opacity: 0.6;
+}
+
+.texto-riscado {
+    text-decoration: line-through;
+}
