@@ -45,25 +45,29 @@ router.post("/", (req, res) => {
     });
 });
 
-// 3. ATUALIZAR STATUS (PUT /tarefas/:id) - COMPLETO
+// 3. ATUALIZAR TAREFA (PUT /tarefas/:id) - STATUS OU DADOS
 router.put("/:id", (req, res) => {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, titulo, descricao } = req.body;
 
-    if (!status) {
-        return res.status(400).json({ mensagem: "Campo 'status' é obrigatório." });
-    }
-
-    const sql = "UPDATE tarefas SET status = ? WHERE id = ?";
-    
-    db.query(sql, [status, id], (err, result) => {
+    // Busca a tarefa atual para não sobrescrever dados com vazio
+    db.query("SELECT * FROM tarefas WHERE id = ?", [id], (err, results) => {
         if (err) return res.status(500).json(err);
-        
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ mensagem: "Tarefa não encontrada." });
-        }
+        if (results.length === 0) return res.status(404).json({ mensagem: "Tarefa não encontrada." });
 
-        res.json({ mensagem: "Tarefa atualizada!" });
+        const tarefaAtual = results[0];
+        
+        // Usa os dados novos se vierem, senão mantém os atuais do banco
+        const novoStatus = status !== undefined ? status : tarefaAtual.status;
+        const novoTitulo = titulo !== undefined ? titulo : tarefaAtual.titulo;
+        const novaDescricao = descricao !== undefined ? descricao : tarefaAtual.descricao;
+
+        const sql = "UPDATE tarefas SET status = ?, titulo = ?, descricao = ? WHERE id = ?";
+        
+        db.query(sql, [novoStatus, novoTitulo, novaDescricao, id], (err, result) => {
+            if (err) return res.status(500).json(err);
+            res.json({ mensagem: "Tarefa atualizada!" });
+        });
     });
 });
 
